@@ -1,4 +1,5 @@
 **Presentation**
+
 The solidity file boson_test.sol contains the smart contract Boson which describes a simplified version of the Boson Protocol exchange mechanism, by the aid of an escrow arrangement. In other words, the contract allows for a safe remote purchase system. The contract is deployed in Ganache testnet. The owner and escrow addresses are passed as an argument in the constructor. In order that the person that deployes the contract is not necessarily the contract's owner, the contract inherits from an Ownable.sol contract from the OpenZeppelin libraries and makes use of the transferownership function of the latter contract. 
 With the exception of the escrow's address, every other user has to register as either a Seller or a Buyer. If a user has already registered, he is not allowed to re-register with the same Partie state. We assume that the registration of each user has a period of 1 year after which the user needs to renew it. If a person is registered as a seller/Buyer, he is also allowed to register as a buyer/seller but retains his id. 
 A seller can credit his account balance via the use of the credit() function. Offers are   
