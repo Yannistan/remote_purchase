@@ -28,17 +28,26 @@ Download and install docker for mac: https://www.docker.com/get-started
 When dockeris installed, type the following commands in your termnial:
 
 % cd ~
+
 % docker pull trailofbits/solc-select
+
 % docker run --read-only -i --rm --entrypoint='/bin/sh' trailofbits/solc-select:latest -c 'cat /usr/bin/install.sh' > a.sh
+
 % sed s+\'/usr/bin/solc\'+\'/usr/local/bin/solc\'+ a.sh > b.sh
+
 % chmod a+x b.sh
+
 % ./b.sh
+
 % chmod a+x /usr/local/bin/solc
+
 % rm a.sh b.sh
 
 Linux
 % cd ~
+
 % git clone https://github.com/crytic/solc-select.git
+
 % ./solc-select/scripts/install.sh
 
 This will install solc into ~/.solc-select/, so you have to add it to the PATH variable. Add this line, replacing USERNAME with your username, to your ~/.zshrc or equivalent:
@@ -146,24 +155,43 @@ Official documentation on truffle-config.js: https://www.trufflesuite.com/docs/t
 This file is a Javascript file and can execute any code necessary to create our configuration. It must export an object representing your project configuration like the example below:
 
 module.exports = {
+
   // Configure networks
+
   networks: {
+
     development: {
+
       host: '127.0.0.1',
+
       port: 8545,
+
       network_id: '*', // Match any network id
+
     },
+
   },
+
   // Configure MochaJS testing framework
+
   mocha: {
+
     // timeout: 100000
+
   },
+
   // Configure your compilers
+
   compilers: {
+
     solc: {
+
       version: 'native',
+
     },
+
   },
+
 }
 
 Directory test/:
@@ -175,7 +203,9 @@ We used the OpenZepplin test helpers and test environment. Install these package
 We will not use truffle test for running tests since we switched to OpenZeppelin test env. To this end, we made Mocha the entry point of the test suite by adding to package.json:
 
 "scripts": {
+
     "test": "npx mocha --exit --recursive"
+
 },
 
 We can now run tests with yarn test command. Smart contracts need to be compiled with truffle compile before running the tests.
@@ -212,18 +242,28 @@ Inside the project directory:
 We installed solhint as dev dependency:
 
 % yarn add --dev solhint
+
 and created a .solhint.json config file:
 
 {
+
   "extends": "solhint:recommended",
+
   "rules": {
+
     "func-order": "off",
+
     "mark-callable-contracts": "off",
+
     "no-empty-blocks": "off",
+
     "compiler-version": ["error", "^0.6.0"],
+
     "private-vars-leading-underscore": "error",
+
     "reason-string": "off"
   }
+
 }
 
 ***eslint***
@@ -240,59 +280,107 @@ eslint-plugin-mocha-no-only eslint-plugin-node eslint-plugin-promise eslint-plug
 and create an .eslintrc config file:
 
 {
+
   "extends": ["standard", "plugin:promise/recommended"],
+
   "plugins": ["mocha-no-only", "promise"],
+
   "env": {
+
     "browser": true,
+
     "node": true,
+
     "mocha": true,
+
     "jest": true
+
   },
+
   "globals": {
+
     "artifacts": false,
+
     "contract": false,
+
     "assert": false,
+
     "web3": false
+
   },
+
   "rules": {
+
     // Strict mode
+
     "strict": ["error", "global"],
 
     // Code style
+
     "array-bracket-spacing": ["off"],
+
     "camelcase": ["error", { "properties": "always" }],
+
     "comma-dangle": ["error", "always-multiline"],
+
     "comma-spacing": ["error", { "before": false, "after": true }],
+
     "dot-notation": ["error", { "allowKeywords": true, "allowPattern": "" }],
+
     "eol-last": ["error", "always"],
+
     "eqeqeq": ["error", "smart"],
+
     "generator-star-spacing": ["error", "before"],
+
     "indent": ["error", 2],
+
     "linebreak-style": ["error", "unix"],
+
     "max-len": ["error", 120, 2],
+
     "no-debugger": "off",
+
     "no-dupe-args": "error",
+
     "no-dupe-keys": "error",
+
     "no-mixed-spaces-and-tabs": ["error", "smart-tabs"],
+
     "no-redeclare": ["error", { "builtinGlobals": true }],
+
     "no-trailing-spaces": ["error", { "skipBlankLines": false }],
+
     "no-undef": "error",
+
     "no-use-before-define": "off",
+
     "no-var": "error",
+
     "object-curly-spacing": ["error", "always"],
+
     "prefer-const": "error",
+
     "quotes": ["error", "single"],
+
     "semi": ["error", "always"],
+
     "space-before-function-paren": ["error", "always"],
 
     "mocha-no-only/mocha-no-only": ["error"],
 
     "promise/always-return": "off",
+
     "promise/avoid-new": "off"
+
   },
+
   "parserOptions": {
+
     "ecmaVersion": 2018
+
   }
+
 }
 
 ***prettier***
@@ -305,31 +393,57 @@ and created a .prettierrc config file:
 
 {
   "overrides": [
+
     {
+
       "files": "*.sol",
+
       "options": {
+
         "printWidth": 120,
+
         "tabWidth": 4,
+
         "useTabs": false,
+
         "singleQuote": false,
+
         "bracketSpacing": false,
+
         "explicitTypes": "always"
+
       }
+
     },
+
     {
+
       "files": "*.js",
+
       "options": {
+
         "printWidth": 120,
+
         "tabWidth": 2,
+
         "useTabs": false,
+
         "semi": true,
+
         "singleQuote": true,
+
         "arrowParens": "always",
+
         "bracketSpacing": true,
+
         "trailingComma": "all"
+
       }
+
     }
+
   ]
+
 }
 
 At this point code formatting can be broken.
@@ -397,7 +511,10 @@ To sign transaction, we used the HD-WAllet Provider.
 
 Afterwards, we use the javascript web3 functions in order to display a list of teh available accounts:
 
-truffle(rinkeby)> await web3.eth.getAccounts() [ '0x261B63E23eCAAc767Eb5d47F9Ee731651deF9c76', '0x8730d2185956D592d197beEc482b4e6632B6f8f3', '0xdfE3392BC894c22AE894577345D6E8B7E8F54774', '0x8135ef013e6a77Bb434c5e2f69a47796e1206AE1', '0x64d68464971126F06c0F0439E84C6c78c3d37e83', '0xC353733996fd4EfECb07f88a7CFD69c05B7aa416', '0x65BBDf74B9d20B2a3b75e2A2e9643b561b721B8C', '0x6Bc4eBE7096AE84570EF47c6bC389eF8FF452e71', '0x9Eeea75C80AaBfb98b9E97211bc6fF899f6c6Aaa', '0xBD8e7Ad3FC2A6Bfcba664C78DE5DdAFda171e789' ]
+truffle(rinkeby)> await web3.eth.getAccounts() 
+[
+     '0x261B63E23eCAAc767Eb5d47F9Ee731651deF9c76', '0x8730d2185956D592d197beEc482b4e6632B6f8f3', '0xdfE3392BC894c22AE894577345D6E8B7E8F54774', '0x8135ef013e6a77Bb434c5e2f69a47796e1206AE1', '0x64d68464971126F06c0F0439E84C6c78c3d37e83', '0xC353733996fd4EfECb07f88a7CFD69c05B7aa416', '0x65BBDf74B9d20B2a3b75e2A2e9643b561b721B8C', '0x6Bc4eBE7096AE84570EF47c6bC389eF8FF452e71', '0x9Eeea75C80AaBfb98b9E97211bc6fF899f6c6Aaa', '0xBD8e7Ad3FC2A6Bfcba664C78DE5DdAFda171e789' 
+     ]
 
 The first account, account[0], is used by default by truffle.   After having sent ethers to this account, we deploy the contract by:
 
