@@ -38,15 +38,15 @@ context('registration of a buyer and a seller and check of offers and orders', f
   });
 
   it('get seller data', async function () {
-    const result1 = await this.app.getPartie(seller1, { from: seller1 });
+    const result1 = await this.app.getParty(seller1, { from: seller1 });
     console.log(result1);
     expect(result1[0]).to.be.a.bignumber.equal(new BN(1));
     expect(result1[1]).to.be.a.bignumber.equal(new BN(1));
   });
  
-  it('add credit and verify change in structure Partie', async function () {
+  it('add credit and verify change in structure Party', async function () {
     await this.app.credit(AMOUNT, { from: buyer1 });
-    const result4 = await this.app.getPartie(buyer1);
+    const result4 = await this.app.getParty(buyer1);
     console.log(result4);
     expect(result4[2]).to.be.a.bignumber.equal(AMOUNT);
   });

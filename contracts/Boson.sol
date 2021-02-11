@@ -24,8 +24,8 @@ contract Boson is Ownable {
     address payable addrescrow;
 
     
-     /// @dev struct Buyer
-    struct Partie{
+     /// @dev struct Party
+    struct Party{
          uint id; 
          uint state; // 1 if seller, 2 if buyer 
          uint256 credit; // amount of money in ethers to be deposited to the user's account 
@@ -50,13 +50,13 @@ contract Boson is Ownable {
     
     
     /// @dev mapping from an address to a Partie
-    mapping (address => Partie) parties;
+    mapping (address => Party) parties;
     
     /// @dev mapping from an order's title to an Order
     mapping (string => Order) orders;
     
      /// @dev counter of Partie
-    uint private counterPartie;
+    uint private counterParty;
     
     /// @dev counter of Offers
     uint private counterOffer;
@@ -119,9 +119,9 @@ contract Boson is Ownable {
            
             parties[msg.sender].state = 2;
             } else {
-              counterPartie++;
-              uint count0 = counterPartie;
-              parties[msg.sender] = Partie(count0, 2, 0, block.timestamp + 52 weeks);
+              counterParty++;
+              uint count0 = counterParty;
+              parties[msg.sender] = Party(count0, 2, 0, block.timestamp + 52 weeks);
             }
         } else if (_person == Person.Seller) {
          require(parties[msg.sender].state != 1, "only for non registered users as sellers");
@@ -129,18 +129,18 @@ contract Boson is Ownable {
            
             parties[msg.sender].state = 1;
             } else {
-            counterPartie++;
-            uint count1 = counterPartie;
-            parties[msg.sender] = Partie(count1, 1, 0, block.timestamp + 52 weeks);
+            counterParty++;
+            uint count1 = counterParty;
+            parties[msg.sender] = Party(count1, 1, 0, block.timestamp + 52 weeks);
             }
         } else revert("Invalid status choice");
        
     }
     
      /// @dev Function that is used to retrieve the contents of a Buyer. Used for the tests in order to check the performance of register()
-    /// @param partieAddress : address of the buyer (msg.sender)
-    function getPartie(address partieAddress) public view returns (Partie memory) {
-        return parties[partieAddress];
+    /// @param partyAddress : address of the buyer (msg.sender)
+    function getParty(address partyAddress) public view returns (Party memory) {
+        return parties[partyAddress];
     }
     
      /// @dev only a seller already registered can call this function. It allows for an offer proposition
