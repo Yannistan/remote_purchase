@@ -100,7 +100,9 @@ Created a directory for the project and cd inside.
 Initialize a Truffle project, the git repository and a nodejs project:
 
 % truffle init
+
 % git init
+
 % yarn init
 
 Truffle generates build files while compiling your project in the build/ directory.
